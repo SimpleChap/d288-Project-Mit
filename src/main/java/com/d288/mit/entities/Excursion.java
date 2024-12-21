@@ -20,32 +20,30 @@ public class Excursion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    @Column (name = "excursion_id")
+    @Column(name = "excursion_id")
     private Long id;
 
-    @Column (name = "excursion_title")
+    @Column(name = "excursion_title")
     private String excursion_title;
 
-    @Column (name = "excursion_price")
+    @Column(name = "excursion_price")
     private BigDecimal excursion_price;
 
-    @Column (name = "image_url")
+    @Column(name = "image_url")
     private String image_URL;
 
-    @Column (name = "create_date")
+    @Column(name = "create_date")
     @CreationTimestamp
     private Date create_date;
 
-    @Column (name = "last_update")
+    @Column(name = "last_update")
     @UpdateTimestamp
     private Date last_update;
 
     @ManyToOne
-    @JoinColumn (name = "vacation_id")
+    @JoinColumn(name="vacation_id", nullable = false)
     private Vacation vacation;
 
-    @ManyToMany (mappedBy = "excursions")
+    @ManyToMany(mappedBy = "excursions")
     private Set<CartItem> cartItems = new HashSet<>();
-
 }

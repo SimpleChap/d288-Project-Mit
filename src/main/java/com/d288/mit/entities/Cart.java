@@ -49,22 +49,16 @@ public class Cart {
     private Date last_update;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @OneToMany(mappedBy = "cart")
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
     private Set<CartItem> cartItems = new HashSet<>();
 
     public void add(CartItem cartItem) {
-        this.cartItems.add(cartItem);
-    }
-    /*public void add(CartItem item) {
-        if (item != null) {
-            if(cartItems == null) {
-                cartItems = new HashSet<>();
-            }
-            cartItems.add(item);
-            item.setCart(this);
+        if (cartItem != null){
+            this.cartItems.add(cartItem);
+            cartItem.setCart(this);
         }
-    }*/
+    }
 }

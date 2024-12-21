@@ -25,6 +25,16 @@ public class Division {
     @Column(name = "division")
     private String division_name;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country_id", nullable = false, insertable = false, updatable = false)
+    private Country country;
+
+    @Column(name = "country_id")
+    private Long country_id;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "division")
+    private Set<Customer> customers = new HashSet<>();
+
     @Column(name = "create_date")
     @CreationTimestamp
     private Date create_date;
@@ -32,28 +42,4 @@ public class Division {
     @Column(name = "last_update")
     @UpdateTimestamp
     private Date last_update;
-
-    @Column(name = "country_id")
-    private Long country_id;
-
-   /* public void setCountry(Country country) {
-        setCountry_id(country.getId());
-        this.country = country;
-    }*/
-
-    public Division() {
-    }
-
-    public Division(Long id, String division_name) {
-        this.id = id;
-        this.division_name = division_name;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "country_id", nullable = false, insertable = false, updatable = false)
-    private Country country;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "division")
-    private Set<Customer> customers;
-
 }

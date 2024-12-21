@@ -47,7 +47,7 @@ public class Customer {
     private Date last_update;
 
     @ManyToOne
-    @JoinColumn(name = "division_id")
+    @JoinColumn(name = "division_id", nullable = false)
     private Division division;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
@@ -65,7 +65,10 @@ public class Customer {
     }*/
 
     public void add(Cart cart) {
-        this.carts.add(cart);
+        if (cart != null) {
+            carts.add(cart);
+            this.carts.add(cart);
+        }
     }
 
 

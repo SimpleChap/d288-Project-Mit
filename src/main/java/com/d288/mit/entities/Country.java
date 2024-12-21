@@ -26,6 +26,9 @@ public class Country {
     @Column(name = "country")
     private String country_name;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "country")
+    private Set<Division> divisions;
+
     @Column(name = "create_date")
     @CreationTimestamp
     private Date create_date;
@@ -33,7 +36,4 @@ public class Country {
     @Column(name = "last_update")
     @UpdateTimestamp
     private Date last_update;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "country")
-    private Set<Division> divisions;
 }
