@@ -26,6 +26,11 @@ public class CheckoutServiceImpl implements CheckoutService {
     @Override
     @Transactional
     public PurchaseResponse placeOrder(Purchase purchase) {
+
+        if (purchase.getCart() == null || purchase.getCartItems() == null || purchase.getCartItems().isEmpty()) {
+            return new PurchaseResponse("Cart is Empty");
+        }
+
         // Retrieve the cart
         Cart cart = purchase.getCart();
 
@@ -46,6 +51,7 @@ public class CheckoutServiceImpl implements CheckoutService {
 
         // save customer to database
         customerRepository.save(customer);
+
 
         return new PurchaseResponse(orderTrackingNumber);
     }
