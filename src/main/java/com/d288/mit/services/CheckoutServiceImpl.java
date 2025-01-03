@@ -1,5 +1,6 @@
 package com.d288.mit.services;
 
+import com.d288.mit.dao.CartRepository;
 import com.d288.mit.dao.CustomerRepository;
 import com.d288.mit.entities.Cart;
 import com.d288.mit.entities.CartItem;
@@ -15,12 +16,12 @@ import java.util.UUID;
 @Service
 public class CheckoutServiceImpl implements CheckoutService {
 
-    private final CustomerRepository customerRepository;
-
+    //private final CustomerRepository customerRepository;
+    private final CartRepository cartRepository;
 
     @Autowired
-    public CheckoutServiceImpl(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
+    public CheckoutServiceImpl(CartRepository cartRepository) {
+        this.cartRepository = cartRepository;
     }
 
     @Override
@@ -34,12 +35,12 @@ public class CheckoutServiceImpl implements CheckoutService {
         // Retrieve the cart
         Cart cart = purchase.getCart();
 
+        // Set status to ordered
+        cart.setStatus(StatusType.ordered);
+
         // Generate a tracking number
         String orderTrackingNumber = generateOrderTrackingNumber();
         cart.setOrderTrackingNumber(orderTrackingNumber);
-
-        // Set status to ordered
-        cart.setStatus(StatusType.ordered);
 
         //Populate cart
         Set<CartItem> cartItems = purchase.getCartItems();
@@ -47,11 +48,9 @@ public class CheckoutServiceImpl implements CheckoutService {
 
         //populate customer with cart
         Customer customer = purchase.getCustomer();
-        customer.add(cart);
+        cart.setCustomer(customer);
 
-        // save customer to database
-        customerRepository.save(customer);
-
+        cartRepository.save(cart);
 
         return new PurchaseResponse(orderTrackingNumber);
     }

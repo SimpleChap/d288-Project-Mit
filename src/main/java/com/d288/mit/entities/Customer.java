@@ -47,7 +47,7 @@ public class Customer {
     private Date last_update;
 
     @ManyToOne
-    @JoinColumn(name = "division_id", nullable = false)
+    @JoinColumn(name = "division_id",nullable = false)
     private Division division;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
@@ -75,12 +75,21 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String firstName, String lastName, String address, String postal_code, String phone, Division division) {
+    public Customer(String firstName, String lastName, String address, String postal_code, String phone, Long division) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.postal_code = postal_code;
         this.phone = phone;
-        this.division = division;
+        this.division = setDivision(division);
+    }
+
+    public Division setDivision(Long id) {
+
+        Division division = new Division();
+        division.setId(id);
+
+        return division;
+
     }
 }
