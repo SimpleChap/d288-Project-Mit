@@ -16,7 +16,6 @@ import java.util.UUID;
 @Service
 public class CheckoutServiceImpl implements CheckoutService {
 
-    //private final CustomerRepository customerRepository;
     private final CartRepository cartRepository;
 
     @Autowired

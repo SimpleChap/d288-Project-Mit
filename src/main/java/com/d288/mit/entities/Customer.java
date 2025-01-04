@@ -53,14 +53,15 @@ public class Customer {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
     private Set<Cart> carts = new HashSet<>();
 
-    public void add(Cart cart) {
+    /*public void add(Cart cart) {
         if (cart != null) {
             carts.add(cart);
             this.carts.add(cart);
         }
     }
 
-    /*
+     */
+
     public void add(Cart cart) {
         if(cart != null) {
             if(carts == null) {
@@ -70,26 +71,28 @@ public class Customer {
             cart.setCustomer(this);
         }
     }
-     */
+
 
     public Customer() {
+
     }
 
-    public Customer(String firstName, String lastName, String address, String postal_code, String phone, Long division) {
+    public Customer(String firstName, String lastName, String address, String postal_code, String phone, Division division) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.postal_code = postal_code;
         this.phone = phone;
-        this.division = setDivision(division);
+        this.division = division;
     }
 
-    public Division setDivision(Long id) {
-
+    /*public Division setDivision(Long id) {
         Division division = new Division();
         division.setId(id);
 
         return division;
 
     }
+     */
+
 }
